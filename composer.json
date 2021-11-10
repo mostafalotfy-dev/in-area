@@ -1,0 +1,17 @@
+{
+    "name": "mostafa/leafletmap-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mostafa Hesham",
+            "email": "motaheshamabdel@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-json": "*"
+    },
+    "autoload": {
+        "files": ["helper/helper.php"],
+        "psr-4": { "App\\Location\\": ["src/"] }
+    }
+}
