@@ -79,19 +79,31 @@ class Bounds implements \Iterator, \ArrayAccess, \Countable
     {
         return new Point($this->min->x, $this->max->y);
     }
-
+    /**
+     * @return Point
+     */
     public function getTopRight()
     {
         return new Point($this->min->x, $this->max->y);
     }
+    /**
+     * @return Point
+     */
     public function getTopLeft()
     {
         return $this->min;
     }
+    /**
+     * @return Point
+     */
     public function getBottomRight()
     {
         return $this->max;
     }
+    /**
+     * 
+     * @return Point
+     */
     public function getSize()
     {
         return  $this->max->subtract($this->min);
@@ -135,10 +147,19 @@ class Bounds implements \Iterator, \ArrayAccess, \Countable
         $yIntersect = ($max2->y >= $min->y) && ($min2->y <= $max->y);
         return $xIntersect && $yIntersect;
     }
+    /**
+     * Check if valid point
+     * @return bool
+     */
     public function isValid()
     {
         return !!($this->min && $this->max);
     }
+
+    /**
+     * @return Bounds 
+     * @throws InvalidArgumentException 
+     */
     public static function fromArray(array $points)
     {
         if(count($points) === 0)

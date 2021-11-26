@@ -4,10 +4,11 @@
     "authors": [
         {
             "name": "Mostafa Hesham",
-            "email": "motaheshamabdel@gmail.com"
+            "email": "mostafalotfy285@gmail.com"
         }
     ],
     "require": {
+        "php":"^7.1",
         "ext-json": "*"
     },
     "autoload": {
