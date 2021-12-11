@@ -3,9 +3,10 @@
 
 namespace App\Location\Geometry;
 
+use Iterator;
 use Traversable;
 
-class Bounds implements Traversable
+class Bounds implements Traversable,Iterator
 {
     /**
      * @var Point[]
@@ -180,14 +181,18 @@ class Bounds implements Traversable
         return $this->points[$this->index];
     }
 
-    /**
-     * @inheritDoc
-     */
+   public function valid()
+   {
+       return isset($this->points[$this->index]);
+   }
     public function next()
     {
-        ++$this->index;
+         ++$this->index;
     }
-
+    public function rewind()
+    {
+        $this->index = 0;
+    }
     /**
      * @inheritDoc
      */
@@ -199,18 +204,12 @@ class Bounds implements Traversable
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function x()
     {
         return isset($this->points[$this->index]);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function rewind()
-    {
-        $this->index = 0;
-    }
+    
 
     /**
      * @inheritDoc
