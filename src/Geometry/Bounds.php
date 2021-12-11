@@ -5,7 +5,7 @@ namespace App\Location\Geometry;
 
 use Traversable;
 
-class Bounds implements Traversable, \Countable,\Iterator
+class Bounds implements Traversable
 {
     /**
      * @var Point[]
@@ -250,5 +250,5 @@ class Bounds implements Traversable, \Countable,\Iterator
     public function count()
     {
         return count($this->points);
-    }
+    }   
 }
