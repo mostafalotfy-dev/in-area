@@ -3,10 +3,9 @@
 
 namespace App\Location\Geometry;
 
+use Traversable;
 
-
-
-class Bounds implements \Iterator, \ArrayAccess, \Countable
+class Bounds implements Traversable, \Countable,\Iterator
 {
     /**
      * @var Point[]
