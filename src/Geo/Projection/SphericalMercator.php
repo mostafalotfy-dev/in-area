@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Location\Geo\Projection;
+namespace Leaflet\Location\Geo\Projection;
 
-use App\LatLng;
-use App\Geometry\Point;
+use Leaflet\LatLng;
+use Leaflet\Geometry\Point;
 class SphericalMercator
 {
     public const R = 6378137;

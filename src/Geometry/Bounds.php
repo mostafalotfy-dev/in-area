@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Location\Geometry;
+namespace Leaflet\Location\Geometry;
 
 use Iterator;
 use Traversable;
@@ -108,7 +108,16 @@ class Bounds implements Traversable,Iterator
     {
         return  $this->max->subtract($this->min);
     }
-
+    public function overlaps(Bounds $bounds)
+    {
+        $min = $this->min;
+        $max = $this->max;
+        $min2 = $bounds->min;
+        $max2 = $bounds->max;
+        $xOverlaps = ($max2->x > $min->x) && ($min2->x  < $max->x);
+        $yOverlaps = ($max2->y > $min->y) && ($min2->y < $max->y);
+        return $xOverlaps && $yOverlaps;
+    }
     /**
      * Check if point exists inside rectangle or not
      * the point can (Bounds) or (Point)

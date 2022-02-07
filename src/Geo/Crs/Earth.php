@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Location\Geo\Crs;
+namespace Leaflet\Location\Geo\Crs;
 
 
-use App\Location\LatLng;
+use Leaflet\Location\LatLng;
 
 class Earth extends CRS
 {

@@ -4,7 +4,7 @@
 namespace App\Location;
 
 
-use App\Location\Geo\Crs\Earth;
+use Leaflet\Location\Geo\Crs\Earth;
 
 class LatLng
 {
