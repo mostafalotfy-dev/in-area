@@ -4,7 +4,7 @@
 namespace Leaflet\Location\Geometry;
 
 
-use App\Location\LatLng;
+use Leaflet\Location\LatLng;
 
 /**
  * Class Point

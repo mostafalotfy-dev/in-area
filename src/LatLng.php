@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Location;
+namespace Leaflet\Location;
 
 
 use Leaflet\Location\Geo\Crs\Earth;

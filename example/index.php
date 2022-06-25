@@ -1,11 +1,10 @@
 <?php
 
 
-use App\Location\Geo\Crs\Earth;
-use App\Location\Geometry\Bounds;
-use App\Location\Geometry\Point;
+use Leaflet\Location\Geometry\Bounds;
+use Leaflet\Location\Geometry\Point;
 
-require("../vendor/autoload.php");
+require(__DIR__."/../vendor/autoload.php");
 
 if (isset($_POST["lat"])) {
 

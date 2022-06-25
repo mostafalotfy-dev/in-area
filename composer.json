@@ -8,11 +8,11 @@
         }
     ],
     "require": {
-        "php":"^7.1",
+        "php":">=7.1",
         "ext-json": "*"
     },
     "autoload": {
         "files": ["helper/helper.php"],
-        "psr-4": { "Leaflet\\Location\\": ["src/"] }
+        "psr-4": { "\\Location\\": ["src/"] }
     }
 }
