@@ -79,6 +79,7 @@ if (isset($_POST["lat"])) {
                 success: function (data) {
                     data = JSON.parse(data);
                     // your code goes here
+                    console.log(data)
                 }
             })
 
