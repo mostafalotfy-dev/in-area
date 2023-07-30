@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Leaflet\Location\Geo\Crs;
+namespace Location\Geo\Crs;
 
 
-use Leaflet\Location\LatLng;
+use Location\LatLng;
 
 abstract class CRS
 {

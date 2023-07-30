@@ -2,8 +2,8 @@
 
 
 
-namespace Leaflet\Location\Geometry;
-use Leaflet\Location\Geometry\Point;
+namespace Location\Geometry;
+use Location\Geometry\Point;
 class Transformation { 
     private $vectorA;
     private $vectorB;

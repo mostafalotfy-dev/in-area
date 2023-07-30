@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Leaflet\Location;
+namespace Location;
 
 
-use Leaflet\Location\Geo\Crs\Earth;
+use Location\Geo\Crs\Earth;
 
 class LatLng
 {

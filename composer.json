@@ -13,6 +13,6 @@
     },
     "autoload": {
         "files": ["helper/helper.php"],
-        "psr-4": { "\\Location\\": ["src/"] }
+        "psr-4": { "Location\\": ["src/"] }
     }
 }

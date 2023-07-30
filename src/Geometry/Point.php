@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Leaflet\Location\Geometry;
+namespace Location\Geometry;
 
 
-use Leaflet\Location\LatLng;
+use Location\LatLng;
 
 /**
  * Class Point

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Leaflet\Location\Geometry;
+namespace Location\Geometry;
 
 use Iterator;
 use Traversable;

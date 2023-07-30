@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Leaflet\Location\Geo\Projection;
+namespace Location\Geo\Projection;
 
 
 class Mercator
