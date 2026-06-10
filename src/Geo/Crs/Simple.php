@@ -3,7 +3,7 @@
 
 namespace Location\Geo\Crs;
 
-use App\Location\LatLng;
+use Location\LatLng;
 
 class Simple extends CRS
 {

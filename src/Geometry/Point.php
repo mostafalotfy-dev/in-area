@@ -15,11 +15,11 @@ class Point
     /**
      * @var false|float
      */
-    public $x;
+    private $x;
     /**
      * @var false|float
      */
-    public $y;
+    private $y;
 
     
     public function __construct($x, $y, $round = false)
@@ -28,11 +28,21 @@ class Point
         $this->y = $round ? round($y) : $y;
     }
 
+    public function getX(): float
+    {
+        return $this->x;
+    }
+
+    public function getY(): float
+    {
+        return $this->y;
+    }
+
     /**
      * return new Object of Point
      * @return Point
      */
-    public function copy()
+    public function copy(): Point
     {
         return new Point($this->x, $this->y);
     }
@@ -42,7 +52,7 @@ class Point
      * @param Point $point
      * @return float
      */
-    public function distanceTo(Point $point)
+    public function distanceTo(Point $point): float
     {
         $x = $point->x - $this->x;
         $y = $point->y - $this->y;
@@ -54,9 +64,9 @@ class Point
      * @param Point $point
      * @return bool
      */
-    public function equals(Point $point)
+    public function equals(Point $point): bool
     {
-        return $point->x === $this->x && $point->y === $this->y;
+        return $point->getX() === $this->x && $point->getY() === $this->y;
     }
 
     /**
@@ -64,91 +74,78 @@ class Point
      * @param Point $point
      * @return bool
      */
-    public function contains(Point $point)
+    public function contains(Point $point): bool
     {
-        return abs($point->x) <= abs($this->x) && abs($point->y) <= abs($this->y);
-    }
-
-    /**
-     * @param Point $point
-     * @return $this
-     */
-    public function subtract(Point $point)
-    {
-        $this->x -= $point->x;
-        $this->y -= $point->y;
-        return $this;
-    }
-
-    /**
-     * @param Point $point
-     * @return $this
-     */
-    public function dividedBy(Point $point)
-    {
-        $this->x /= $point->x;
-        $this->y /= $point->y;
-        return $this;
-
-    }
-
-    /**
-     * @param Point $point
-     * @return $this
-     */
-    public function multiplyBy(Point $point)
-    {
-        $this->x *= $point->x;
-        $this->y *= $point->y;
-        return $this;
+        return abs($point->getX()) <= abs($this->x) && abs($point->getY()) <= abs($this->y);
     }
 
     /**
      * @param Point $point
      * @return Point
      */
-    public function scaleBy(Point $point)
+    public function subtract(Point $point): Point
     {
-        return new Point($this->x * $point->x, $this->y * $point->y);
+        return new Point($this->x - $point->getX(), $this->y - $point->getY());
     }
 
     /**
      * @param Point $point
      * @return Point
      */
-    public function unscaleBy(Point $point)
+    public function dividedBy(Point $point): Point
     {
-        return new Point($this->x / $point->x, $this->y / $point->y);
+        return new Point($this->x / $point->getX(), $this->y / $point->getY());
+    }
+
+    /**
+     * @param Point $point
+     * @return Point
+     */
+    public function multiplyBy(Point $point): Point
+    {
+        return new Point($this->x * $point->getX(), $this->y * $point->getY());
+    }
+
+    /**
+     * @param Point $point
+     * @return Point
+     */
+    public function scaleBy(Point $point): Point
+    {
+        return new Point($this->x * $point->getX(), $this->y * $point->getY());
+    }
+
+    /**
+     * @param Point $point
+     * @return Point
+     */
+    public function unscaleBy(Point $point): Point
+    {
+        return new Point($this->x / $point->getX(), $this->y / $point->getY());
+    }
+
+    /**
+     * @return Point
+     */
+    public function round(): Point
+    {
+        return new Point(round($this->x), round($this->y));
     }
 
     /**
      * @return $this
      */
-    public function round()
+    public function floor(): Point
     {
-        $this->x = round($this->x);
-        $this->y = round($this->y);
-        return $this;
+        return new Point(floor($this->x), floor($this->y));
     }
 
     /**
-     * @return $this
+     * @return Point
      */
-    public function floor()
+    public function ceil(): Point
     {
-        $this->x = floor($this->x);
-        $this->y = floor($this->y);
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function ceil()
-    {
-        $this->x = ceil($this->x);
-        $this->y = ceil($this->y);
-        return $this;
+        return new Point(ceil($this->x), ceil($this->y));
 
     }
 
@@ -156,8 +153,29 @@ class Point
      * convert point to lat long object
      * @return LatLng
      */
-    public function toLatLong()
+    public function toLatLong(): LatLng
     {
         return new LatLng($this->x, $this->y);
+    }
+    public function negate(): Point
+    {
+        return new Point(-$this->x, -$this->y);
+    }
+    public function add(Point $point): Point
+    {
+        return new Point($this->x + $point->getX(), $this->y + $point->getY());
+    }
+
+    /**
+     * Determines if the sum of the point's coordinates is even.
+     * Useful for checkerboard or grid-based logic.
+     */
+    public function isEven(): bool
+    {
+        return (((int)$this->x + (int)$this->y) % 2) === 0;
+    }
+    public function isOdd():bool
+    {
+        return !$this->isEven();
     }
 }

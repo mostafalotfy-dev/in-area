@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Location;
 
 
@@ -34,11 +32,15 @@ class LatLng
      * @param int|null $maxMargin
      * @return bool
      */
-    public function equals(LatLng $latLng, int $maxMargin = null)
+    public function equals(LatLng $latLng, ?int $maxMargin = null): bool
     {
-        $margin = max([abs($this->lat - $latLng->lat), abs($this->lng - $latLng->lng)]);
-        return $margin <= ($maxMargin === null ? 1.0E-9 : $maxMargin);
+        if ($maxMargin == null) {
+            $maxMargin = 0;
+        }
+        return abs($this->lat - $latLng->lat) <= $maxMargin && abs($this->lng - $latLng->lng) <= $maxMargin;
     }
+    
+
 
     /**
      * @param LatLng $other

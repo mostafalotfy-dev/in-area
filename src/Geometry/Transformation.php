@@ -14,9 +14,9 @@ class Transformation {
         if(is_array($a))
         {
             $this->vectorA = $a[0];
-            $this->vectorB = $b[1];
-            $this->vectorC = $c[2];
-            $this->vectorD = $d[3];
+            $this->vectorB = $a[1];
+            $this->vectorC = $a[2];
+            $this->vectorD = $a[3];
         }else{
             $this->vectorA = $a;
             $this->vectorB = $b;
@@ -27,13 +27,13 @@ class Transformation {
     }
     public function transform(Point $point,$scale = 1)
     {
-        $point->x = ($scale * ($this->vectorA * $point->x + $this->vectorB));
-        $point->y = ($scale * ($this->vectorC * $point->y + $this->vectorD));
-        return $point;
+        $newX = ($scale * ($this->vectorA * $point->getX() + $this->vectorB));
+        $newY = ($scale * ($this->vectorC * $point->getY() + $this->vectorD));
+        return new Point($newX, $newY);
     }
     public function untransform(Point $point ,$scale = 1)
     {
-        return new Point(($point->x / $scale - $this->vectorB)/$this->a,
-        ($point->y/ $scale- $this->vectorD) /$this->vectorC );
+        return new Point(($point->getX() / $scale - $this->vectorB)/$this->vectorA,
+        ($point->getY() / $scale- $this->vectorD) /$this->vectorC );
     }
 }

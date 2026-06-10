@@ -6,7 +6,7 @@ namespace Location\Geometry;
 use Iterator;
 use Traversable;
 
-class Bounds implements Traversable,Iterator
+class Bounds implements Iterator, \ArrayAccess, \Countable
 {
     /**
      * @var Point[]
@@ -17,12 +17,12 @@ class Bounds implements Traversable,Iterator
      * min point in the bound
      * @var Point
      */
-    public $min;
+    private $min;
     /**
      * max point in the bounds
      * @var Point
      */
-    public $max;
+    private $max;
 
     public function __construct(array $a, $b = null)
     {
@@ -41,10 +41,8 @@ class Bounds implements Traversable,Iterator
                 $this->min = $point->copy();
                 $this->max = $point->copy();
             } else {
-                $this->min->x = min($point->x, $this->min->x);
-                $this->max->x = max($point->x, $this->max->x);
-                $this->min->y = min($point->y, $this->min->y);
-                $this->max->y = max($point->y, $this->max->y);
+                $this->min = new Point(min($point->getX(), $this->min->getX()), min($point->getY(), $this->min->getY()));
+                $this->max = new Point(max($point->getX(), $this->max->getX()), max($point->getY(), $this->max->getY()));
             }
         }
 
@@ -57,9 +55,21 @@ class Bounds implements Traversable,Iterator
      */
     public function add(Point $point)
     {
-        $this->min = $point->copy();
-        $this->max = $point->copy();
+        // Expand the bounds to include the new point
+        $this->min = new Point(min($point->getX(), $this->min->getX()), min($point->getY(), $this->min->getY()));
+        $this->max = new Point(max($point->getX(), $this->max->getX()), max($point->getY(), $this->max->getY()));
+
         return $this;
+    }
+
+    public function getMin(): Point
+    {
+        return $this->min;
+    }
+
+    public function getMax(): Point
+    {
+        return $this->max;
     }
 
     /**
@@ -67,9 +77,9 @@ class Bounds implements Traversable,Iterator
      * @param bool $round
      * @return Point
      */
-    public function getCenter($round = false)
+    public function getCenter(bool $round = false)
     {
-        return new Point(($this->min->x + $this->max->x) / 2, ($this->min->y + $this->max->y) / 2, $round);
+        return new Point(($this->min->getX() + $this->max->getX()) / 2, ($this->min->getY() + $this->max->getY()) / 2, $round);
     }
 
     /**
@@ -77,14 +87,14 @@ class Bounds implements Traversable,Iterator
      */
     public function getBottomLeft()
     {
-        return new Point($this->min->x, $this->max->y);
+        return new Point($this->min->getX(), $this->max->getY());
     }
     /**
      * @return Point
      */
     public function getTopRight()
     {
-        return new Point($this->min->x, $this->max->y);
+        return new Point($this->max->getX(), $this->min->getY());
     }
     /**
      * @return Point
@@ -112,10 +122,10 @@ class Bounds implements Traversable,Iterator
     {
         $min = $this->min;
         $max = $this->max;
-        $min2 = $bounds->min;
-        $max2 = $bounds->max;
-        $xOverlaps = ($max2->x > $min->x) && ($min2->x  < $max->x);
-        $yOverlaps = ($max2->y > $min->y) && ($min2->y < $max->y);
+        $min2 = $bounds->getMin();
+        $max2 = $bounds->getMax();
+        $xOverlaps = ($max2->getX() > $min->getX()) && ($min2->getX()  < $max->getX());
+        $yOverlaps = ($max2->getY() > $min->getY()) && ($min2->getY() < $max->getY());
         return $xOverlaps && $yOverlaps;
     }
     /**
@@ -131,13 +141,13 @@ class Bounds implements Traversable,Iterator
         if ($point instanceof Point) {
             $min = $max = $point;
         } else {
-            $min = $point->min;
-            $max = $point->max;
+            $min = $point->getMin();
+            $max = $point->getMax();
         }
-        return ($min->x >= $this->min->x) &&
-            ($max->x <= $this->max->x) &&
-            ($max->y >= $this->max->y) &&
-            ($min->y <= $this->max->y);
+        return ($min->getX() >= $this->min->getX()) &&
+            ($max->getX() <= $this->max->getX()) &&
+            ($max->getY() >= $this->max->getY()) &&
+            ($min->getY() <= $this->max->getY());
     }
 
     /**
@@ -149,11 +159,11 @@ class Bounds implements Traversable,Iterator
     {
         $min = $this->min;
         $max = $this->max;
-        $min2 = $bounds->min;
-        $max2 = $bounds->max;
-        $xIntersect = ($max2->x >= $min->x) 
-        && ($min2->x <= $max->x);
-        $yIntersect = ($max2->y >= $min->y) && ($min2->y <= $max->y);
+        $min2 = $bounds->getMin();
+        $max2 = $bounds->getMax();
+        $xIntersect = ($max2->getX() >= $min->getX()) 
+        && ($min2->getX() <= $max->getX());
+        $yIntersect = ($max2->getY() >= $min->getY()) && ($min2->getY() <= $max->getY());
         return $xIntersect && $yIntersect;
     }
     /**
@@ -185,27 +195,27 @@ class Bounds implements Traversable,Iterator
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current():Point
     {
         return $this->points[$this->index];
     }
 
-   public function valid()
+   public function valid():bool
    {
        return isset($this->points[$this->index]);
    }
-    public function next()
+    public function next():void
     {
          ++$this->index;
     }
-    public function rewind()
+    public function rewind():void
     {
         $this->index = 0;
     }
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key():int
     {
         return $this->index;
     }
@@ -213,17 +223,7 @@ class Bounds implements Traversable,Iterator
     /**
      * @inheritDoc
      */
-    public function x()
-    {
-        return isset($this->points[$this->index]);
-    }
-
-    
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->points[$offset]);
     }
@@ -231,7 +231,7 @@ class Bounds implements Traversable,Iterator
     /**
      * @inheritDoc
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->points[$offset];
     }
@@ -239,7 +239,7 @@ class Bounds implements Traversable,Iterator
     /**
      * @inheritDoc
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->points[$offset] = $value;
     }
@@ -247,7 +247,7 @@ class Bounds implements Traversable,Iterator
     /**
      * @inheritDoc
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->points[$offset]);
     }
@@ -255,8 +255,16 @@ class Bounds implements Traversable,Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
-        return count($this->points);
-    }   
+        return \count($this->points);
+    }  
+
+    public function isEven() :bool
+    {
+        return (((int)$this->min->getX() + (int)$this->max->getY()) % 2) === 0;
+    }
+    
+    
+    
 }

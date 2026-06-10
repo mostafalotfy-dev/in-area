@@ -1,5 +1,6 @@
 {
     "name": "mostafa/leafletmap-php",
+    "version": "1.0.0",
     "license": "MIT",
     "authors": [
         {
@@ -8,8 +9,9 @@
         }
     ],
     "require": {
-        "php":">=7.1",
-        "ext-json": "*"
+        "php":">=8.4",
+        "ext-json": "*",
+        "illuminate/collections": "^13.15"
     },
     "autoload": {
         "files": ["helper/helper.php"],
