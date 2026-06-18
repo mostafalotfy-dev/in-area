@@ -1,7 +1,5 @@
 <?php
 namespace Location;
-
-
 use Location\Geo\Crs\Earth;
 
 class LatLng

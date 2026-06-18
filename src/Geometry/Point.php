@@ -1,16 +1,13 @@
 <?php
-
-
 namespace Location\Geometry;
-
-
 use Location\LatLng;
+use Stringable;
 
 /**
  * Class Point
  * @package App\Geometry
  */
-class Point 
+class Point  implements Stringable
 {
     /**
      * @var false|float
@@ -177,5 +174,9 @@ class Point
     public function isOdd():bool
     {
         return !$this->isEven();
+    }
+    public function __toString(): string
+    {
+        return "$this->x,$this->y";
     }
 }

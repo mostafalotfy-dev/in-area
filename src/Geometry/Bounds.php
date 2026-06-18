@@ -3,6 +3,7 @@
 
 namespace Location\Geometry;
 
+use InvalidArgumentException;
 use Iterator;
 use Traversable;
 
@@ -24,10 +25,13 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      */
     private $max;
 
-    public function __construct(array $a, $b = null)
+    public function __construct(array $a, ?array $b = null)
     {
+
         $points = $b ? [$a, $b] : $a;
+
         foreach ($points as $point) {
+
             $this->points[] = $point;
 
         }
@@ -269,7 +273,11 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
     {
         return (((int) $this->min->getX() + (int) $this->max->getY()) % 2) === 0;
     }
-
+    private function isEmpty()
+    {
+        return \count($this->points) === 0;
+    }
+    
 
 
 }

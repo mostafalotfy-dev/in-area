@@ -1,6 +1,6 @@
 <?php
 if (!function_exists("formatNumber")) {
-    function formatNumber($num, $digits = null)
+    function formatNumber(float|int $num, int|null $digits = null)
     {
         $pow = pow(10, $digits === null ? 6 : $digits);
         return round($num * $pow) / $pow;
@@ -8,7 +8,7 @@ if (!function_exists("formatNumber")) {
 }
 
 if (!function_exists("splitWords")) {
-    function splitWords($str)
+    function splitWords(string $str)
     {
         $text = trim($str);
         return explode(" ", $text);
