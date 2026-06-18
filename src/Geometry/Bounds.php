@@ -47,7 +47,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         }
 
     }
-    public function __call($name, $args)
+    public function __call(string $name, array $args)
     {
         if (property_exists($this, $name)) {
             return $this->$name(...$args);
