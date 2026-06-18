@@ -47,13 +47,19 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         }
 
     }
-  
+    public function __call($name, $args)
+    {
+        if (property_exists($this, $name)) {
+            return $this->$name(...$args);
+        }
+
+    }
     /**
      * add new Point
      * @param Point $point
      * @return $this
      */
-    public function add(Point $point)
+    private function add(Point $point)
     {
         // Expand the bounds to include the new point
         $this->min = new Point(min($point->getX(), $this->min->getX()), min($point->getY(), $this->min->getY()));
@@ -62,12 +68,12 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         return $this;
     }
 
-    public function getMin(): Point
+    private function getMin(): Point
     {
         return $this->min;
     }
 
-    public function getMax(): Point
+    private function getMax(): Point
     {
         return $this->max;
     }
@@ -77,7 +83,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      * @param bool $round
      * @return Point
      */
-    public function getCenter(bool $round = false)
+    private function getCenter(bool $round = false)
     {
         return new Point(($this->min->getX() + $this->max->getX()) / 2, ($this->min->getY() + $this->max->getY()) / 2, $round);
     }
@@ -116,7 +122,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      */
     public function getSize()
     {
-        return  $this->max->subtract($this->min);
+        return $this->max->subtract($this->min);
     }
     public function overlaps(Bounds $bounds)
     {
@@ -124,7 +130,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         $max = $this->max;
         $min2 = $bounds->getMin();
         $max2 = $bounds->getMax();
-        $xOverlaps = ($max2->getX() > $min->getX()) && ($min2->getX()  < $max->getX());
+        $xOverlaps = ($max2->getX() > $min->getX()) && ($min2->getX() < $max->getX());
         $yOverlaps = ($max2->getY() > $min->getY()) && ($min2->getY() < $max->getY());
         return $xOverlaps && $yOverlaps;
     }
@@ -140,7 +146,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         $max = null;
         if ($point instanceof Point) {
             $min = $max = $point;
-        } else {
+        } else if ($point instanceof Bounds) {
             $min = $point->getMin();
             $max = $point->getMax();
         }
@@ -155,14 +161,14 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      * @param Bounds $bounds
      * @return bool
      */
-    public function intersect(Bounds $bounds)
+    private function intersect(Bounds $bounds)
     {
         $min = $this->min;
         $max = $this->max;
         $min2 = $bounds->getMin();
         $max2 = $bounds->getMax();
-        $xIntersect = ($max2->getX() >= $min->getX()) 
-        && ($min2->getX() <= $max->getX());
+        $xIntersect = ($max2->getX() >= $min->getX())
+            && ($min2->getX() <= $max->getX());
         $yIntersect = ($max2->getY() >= $min->getY()) && ($min2->getY() <= $max->getY());
         return $xIntersect && $yIntersect;
     }
@@ -170,52 +176,51 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      * Check if valid point
      * @return bool
      */
-    public function isValid()
+    private function isValid()
     {
         return !!($this->min && $this->max);
     }
 
     /**
      * @return Bounds 
-     * @throws InvalidArgumentException 
+     * @throws \InvalidArgumentException 
      */
     public static function fromArray(array $points)
     {
-        if(count($points) === 0)
-        {
+        if (\count($points) === 0) {
             throw new \InvalidArgumentException("Array is Empty");
         }
         $_points = [];
-         foreach ($points as $point) {
-             $_points[] = new Point($point[0], $point[1]);
-         }
+        foreach ($points as $point) {
+            $_points[] = new Point($point[0], $point[1]);
+        }
 
-         return new Bounds($_points);
+        return new Bounds($_points);
     }
     /**
      * @inheritDoc
      */
-    public function current():Point
+    public function current(): Point
     {
         return $this->points[$this->index];
     }
 
-   public function valid():bool
-   {
-       return isset($this->points[$this->index]);
-   }
-    public function next():void
+    public function valid(): bool
     {
-         ++$this->index;
+        return isset($this->points[$this->index]);
     }
-    public function rewind():void
+    public function next(): void
+    {
+        ++$this->index;
+    }
+    public function rewind(): void
     {
         $this->index = 0;
     }
     /**
      * @inheritDoc
      */
-    public function key():int
+    public function key(): int
     {
         return $this->index;
     }
@@ -258,13 +263,13 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
     public function count(): int
     {
         return \count($this->points);
-    }  
-
-    public function isEven() :bool
-    {
-        return (((int)$this->min->getX() + (int)$this->max->getY()) % 2) === 0;
     }
-    
-    
-    
+
+    public function isEven(): bool
+    {
+        return (((int) $this->min->getX() + (int) $this->max->getY()) % 2) === 0;
+    }
+
+
+
 }

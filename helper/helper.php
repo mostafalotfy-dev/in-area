@@ -6,12 +6,7 @@ if (!function_exists("formatNumber")) {
         return round($num * $pow) / $pow;
     }
 }
-if (!function_exists("trim")) {
-    function trim($str)
-    {
-        return trim($str);
-    }
-}
+
 if (!function_exists("splitWords")) {
     function splitWords($str)
     {
