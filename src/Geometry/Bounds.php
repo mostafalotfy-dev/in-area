@@ -5,7 +5,7 @@ namespace Location\Geometry;
 
 use InvalidArgumentException;
 use Iterator;
-use Traversable;
+
 
 class Bounds implements Iterator, \ArrayAccess, \Countable
 {
@@ -187,12 +187,12 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
 
     /**
      * @return Bounds 
-     * @throws \InvalidArgumentException 
+     * @throws InvalidArgumentException 
      */
     public static function fromArray(array $points)
     {
         if (\count($points) === 0) {
-            throw new \InvalidArgumentException("Array is Empty");
+            throw new InvalidArgumentException("Array is Empty");
         }
         $_points = [];
         foreach ($points as $point) {

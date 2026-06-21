@@ -1,5 +1,6 @@
 <?php
 require __DIR__."/../vendor/autoload.php";
+
 use Location\Geometry\Point;
 use Location\Pathfinding\Graph;
 $start = new Point(30.8125921,30.9998323);
@@ -14,3 +15,6 @@ $bounds->addEdge($A, $D);
 $bounds->addEdge($B, $C);
 $bounds->addEdge($B, $D);
 print_r($bounds->bfs($start));
+
+
+

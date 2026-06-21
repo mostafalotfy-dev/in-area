@@ -1,5 +1,6 @@
 <?php
 namespace Location\Geometry;
+use InvalidArgumentException;
 use Location\LatLng;
 use Stringable;
 
@@ -24,7 +25,13 @@ class Point  implements Stringable
         $this->x = $round ? round($x) : $x;
         $this->y = $round ? round($y) : $y;
     }
-
+    public function __call(string $name, array $args)
+    {
+        if(method_exists($this,$name)){
+            return $this->$name(...$args);
+        }
+        throw new InvalidArgumentException("Method does not exist");
+    }
     public function getX(): float
     {
         return $this->x;
@@ -39,7 +46,7 @@ class Point  implements Stringable
      * return new Object of Point
      * @return Point
      */
-    public function copy(): Point
+    private function copy(): Point
     {
         return new Point($this->x, $this->y);
     }
@@ -49,7 +56,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return float
      */
-    public function distanceTo(Point $point): float
+    private function distanceTo(Point $point): float
     {
         $x = $point->x - $this->x;
         $y = $point->y - $this->y;
@@ -61,7 +68,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return bool
      */
-    public function equals(Point $point): bool
+    private function equals(Point $point): bool
     {
         return $point->getX() === $this->x && $point->getY() === $this->y;
     }
@@ -71,7 +78,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return bool
      */
-    public function contains(Point $point): bool
+    private function contains(Point $point): bool
     {
         return abs($point->getX()) <= abs($this->x) && abs($point->getY()) <= abs($this->y);
     }
@@ -80,7 +87,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return Point
      */
-    public function subtract(Point $point): Point
+    private function subtract(Point $point): Point
     {
         return new Point($this->x - $point->getX(), $this->y - $point->getY());
     }
@@ -89,7 +96,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return Point
      */
-    public function dividedBy(Point $point): Point
+    private function dividedBy(Point $point): Point
     {
         return new Point($this->x / $point->getX(), $this->y / $point->getY());
     }
@@ -98,7 +105,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return Point
      */
-    public function multiplyBy(Point $point): Point
+    private function multiplyBy(Point $point): Point
     {
         return new Point($this->x * $point->getX(), $this->y * $point->getY());
     }
@@ -107,7 +114,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return Point
      */
-    public function scaleBy(Point $point): Point
+    private function scaleBy(Point $point): Point
     {
         return new Point($this->x * $point->getX(), $this->y * $point->getY());
     }
@@ -116,7 +123,7 @@ class Point  implements Stringable
      * @param Point $point
      * @return Point
      */
-    public function unscaleBy(Point $point): Point
+    private function unscaleBy(Point $point): Point
     {
         return new Point($this->x / $point->getX(), $this->y / $point->getY());
     }
@@ -124,7 +131,7 @@ class Point  implements Stringable
     /**
      * @return Point
      */
-    public function round(): Point
+    private function round(): Point
     {
         return new Point(round($this->x), round($this->y));
     }
@@ -132,7 +139,7 @@ class Point  implements Stringable
     /**
      * @return $this
      */
-    public function floor(): Point
+    private function floor(): Point
     {
         return new Point(floor($this->x), floor($this->y));
     }
@@ -140,7 +147,7 @@ class Point  implements Stringable
     /**
      * @return Point
      */
-    public function ceil(): Point
+    private function ceil(): Point
     {
         return new Point(ceil($this->x), ceil($this->y));
 
@@ -150,15 +157,15 @@ class Point  implements Stringable
      * convert point to lat long object
      * @return LatLng
      */
-    public function toLatLong(): LatLng
+    private function toLatLong(): LatLng
     {
         return new LatLng($this->x, $this->y);
     }
-    public function negate(): Point
+    private function negate(): Point
     {
         return new Point(-$this->x, -$this->y);
     }
-    public function add(Point $point): Point
+    private function add(Point $point): Point
     {
         return new Point($this->x + $point->getX(), $this->y + $point->getY());
     }
@@ -167,11 +174,11 @@ class Point  implements Stringable
      * Determines if the sum of the point's coordinates is even.
      * Useful for checkerboard or grid-based logic.
      */
-    public function isEven(): bool
+    private function isEven(): bool
     {
         return (((int)$this->x + (int)$this->y) % 2) === 0;
     }
-    public function isOdd():bool
+    private function isOdd():bool
     {
         return !$this->isEven();
     }
