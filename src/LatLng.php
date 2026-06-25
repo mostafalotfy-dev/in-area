@@ -2,6 +2,10 @@
 namespace Location;
 use Location\Geo\Crs\Earth;
 
+/**
+ * Class LatLng
+ * @package Location
+ */
 class LatLng
 {
     /**
@@ -14,8 +18,16 @@ class LatLng
      */
     public $lng;
 
+    /**
+     * @var float|null
+     */
     public $alt;
 
+    /**
+     * @param float $lat
+     * @param float $lng
+     * @param float|null $alt
+     */
     public function __construct($lat, $lng, $alt = null)
     {
         $this->lat = $lat;

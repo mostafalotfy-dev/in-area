@@ -6,7 +6,7 @@ use Stringable;
 
 /**
  * Class Point
- * @package App\Geometry
+ * @package Location\Geometry
  */
 class Point  implements Stringable
 {
@@ -20,11 +20,21 @@ class Point  implements Stringable
     private $y;
 
     
+    /**
+     * @param float $x
+     * @param float $y
+     * @param bool $round
+     */
     public function __construct($x, $y, $round = false)
     {
         $this->x = $round ? round($x) : $x;
         $this->y = $round ? round($y) : $y;
     }
+    /**
+     * @param string $name
+     * @param array $args
+     * @return mixed
+     */
     public function __call(string $name, array $args)
     {
         if(method_exists($this,$name)){
@@ -32,11 +42,17 @@ class Point  implements Stringable
         }
         throw new InvalidArgumentException("Method does not exist");
     }
+    /**
+     * @return float
+     */
     public function getX(): float
     {
         return $this->x;
     }
 
+    /**
+     * @return float
+     */
     public function getY(): float
     {
         return $this->y;
@@ -161,10 +177,18 @@ class Point  implements Stringable
     {
         return new LatLng($this->x, $this->y);
     }
+    /**
+     * @return Point
+     */
     private function negate(): Point
     {
         return new Point(-$this->x, -$this->y);
     }
+
+    /**
+     * @param Point $point
+     * @return Point
+     */
     private function add(Point $point): Point
     {
         return new Point($this->x + $point->getX(), $this->y + $point->getY());
@@ -178,10 +202,16 @@ class Point  implements Stringable
     {
         return (((int)$this->x + (int)$this->y) & 1) === 0;
     }
+    /**
+     * @return bool
+     */
     private function isOdd():bool
     {
         return !$this->isEven();
     }
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return "$this->x,$this->y";

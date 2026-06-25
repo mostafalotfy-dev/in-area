@@ -6,14 +6,30 @@ namespace Location\Geo\Crs;
 
 use Location\LatLng;
 
+/**
+ * Class Earth
+ * @package Location\Geo\Crs
+ */
 class Earth extends CRS
 {
     // Mean Earth Radius, as recommended for use by
     // the International Union of Geodesy and Geophysics,
     // see http://rosettacode.org/wiki/Haversine_formula
+    /**
+     * @var array
+     */
     public $wrapLng = [-180, 180];
+
+    /**
+     * @var int|float
+     */
     public $R = 6371;
 
+    /**
+     * @param LatLng $latlng1
+     * @param LatLng $latLng2
+     * @return float|int
+     */
     public function distance(LatLng $latlng1, LatLng $latLng2)
     {
         // Convert latitudes and longitudes from degrees to radians

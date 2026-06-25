@@ -4,14 +4,30 @@ namespace Location\PathFinding;
 use Illuminate\Support\Collection;
 use Location\Geometry\Point;
 use Location\Traits\Encapsulate;
+/**
+ * Class Graph
+ * @package Location\PathFinding
+ */
 class Graph
 {
     use Encapsulate;
+    /**
+     * @var Collection
+     */
     private Collection $adjacencyList;
+
+    /**
+     * @return void
+     */
     public function __construct()
     {
         $this->adjacencyList = collect();
     }
+    /**
+     * @param string $key
+     * @param Point $value
+     * @return array
+     */
     private function addEdge(string $key, Point $value): array
     {
         $this->adjacencyList[$key] = collect();
@@ -21,6 +37,10 @@ class Graph
     }
 
 
+    /**
+     * @param Point $start
+     * @return array
+     */
     private function bfs(Point $start)
     {
         $visited = [];
@@ -47,6 +67,10 @@ class Graph
 
         return $order->toArray();
     }
+    /**
+     * @param mixed $start
+     * @return void
+     */
     private function dijkstra($start)
     {
         $min = (float) INF;

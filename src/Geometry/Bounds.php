@@ -7,12 +7,19 @@ use InvalidArgumentException;
 use Iterator;
 
 
+/**
+ * Class Bounds
+ * @package Location\Geometry
+ */
 class Bounds implements Iterator, \ArrayAccess, \Countable
 {
     /**
      * @var Point[]
      */
     private $points = [];
+    /**
+     * @var int
+     */
     private $index = 0;
     /**
      * min point in the bound
@@ -25,6 +32,10 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      */
     private $max;
 
+    /**
+     * @param array $a
+     * @param array|null $b
+     */
     public function __construct(array $a, ?array $b = null)
     {
 
@@ -51,6 +62,11 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         }
 
     }
+    /**
+     * @param string $name
+     * @param array $args
+     * @return mixed
+     */
     public function __call(string $name, array $args)
     {
         if (property_exists($this, $name)) {
@@ -72,11 +88,17 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         return $this;
     }
 
+    /**
+     * @return Point
+     */
     private function getMin(): Point
     {
         return $this->min;
     }
 
+    /**
+     * @return Point
+     */
     private function getMax(): Point
     {
         return $this->max;
@@ -128,6 +150,10 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
     {
         return $this->max->subtract($this->min);
     }
+    /**
+     * @param Bounds $bounds
+     * @return bool
+     */
     public function overlaps(Bounds $bounds)
     {
         $min = $this->min;
@@ -269,10 +295,17 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         return \count($this->points);
     }
 
+    /**
+     * @return bool
+     */
     public function isEven(): bool
     {
         return (((int) $this->min->getX() + (int) $this->max->getY()) % 2) === 0;
     }
+
+    /**
+     * @return bool
+     */
     private function isEmpty()
     {
         return \count($this->points) === 0;

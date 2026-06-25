@@ -2,8 +2,17 @@
 
 namespace Location\Traits;
 
+/**
+ * Trait Encapsulate
+ * @package Location\Traits
+ */
 trait Encapsulate{
-        public function __call($name,$args)
+    /**
+     * @param string $name
+     * @param array $args
+     * @return mixed
+     */
+    public function __call($name,$args)
     {
         if(method_exists($this,$name))
             {
