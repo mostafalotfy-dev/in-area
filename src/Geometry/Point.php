@@ -176,7 +176,7 @@ class Point  implements Stringable
      */
     private function isEven(): bool
     {
-        return (((int)$this->x + (int)$this->y) % 2) === 0;
+        return (((int)$this->x + (int)$this->y) & 1) === 0;
     }
     private function isOdd():bool
     {

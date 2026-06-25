@@ -8,6 +8,7 @@ $A = new Point(30.8125921, 30.9998323); // Start
 $B = new Point(30.7901745, 31.0006183);
 $C = new Point(30.8158075, 30.9844708);
 $D = new Point(30.7933769, 30.9960697);
+
 $bounds = new Graph();
 $bounds->addEdge($A, $B);
 $bounds->addEdge($A, $C);

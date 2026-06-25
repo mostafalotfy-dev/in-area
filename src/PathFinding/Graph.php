@@ -12,9 +12,12 @@ class Graph
     {
         $this->adjacencyList = collect();
     }
-    private function addEdge(string $key, Point $value): void
+    private function addEdge(string $key, Point $value): array
     {
+        $this->adjacencyList[$key] = collect();
         $this->adjacencyList[$key][] = $value;
+        return $this->adjacencyList->toArray();
+
     }
 
 
@@ -25,32 +28,32 @@ class Graph
         $queue->enqueue($start);
         $visited[$start->__toString()] = true;
         $order = collect();
+        $i = 0;
         while (!$queue->isEmpty()) {
             $node = $queue->dequeue();
-            if (!\is_string($node)) {
-                $currentNode = $this->adjacencyList[$node->__toString()] ?? [];
-            }
-
-            if (\is_string($node)) {
-                $currentNode = $this->adjacencyList[$node] ?? [];
-            }
-
+            $order->push($node);
+            $currentNode = $this->addEdge((string) $i, $node);
 
             foreach ($currentNode as $neighbor) {
-                $neighbor = $neighbor->__toString();
-                if (!isset($visited[$neighbor])) {
-                    $visited[$neighbor] = true;
+                $neighbor = $neighbor[0];
+                if (!isset($visited[$neighbor->__toString()])) {
+                    $visited[$neighbor->__toString()] = true;
                     $order->push($neighbor);
                     $queue->enqueue($neighbor);
                 }
             }
+            $i++;
         }
 
         return $order->toArray();
     }
-    private function dfs($start)
+    private function dijkstra($start)
     {
+        $min = (float) INF;
+        $min_index = 0;
         
+
+
     }
 
 }
