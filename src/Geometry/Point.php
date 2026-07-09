@@ -1,7 +1,8 @@
 <?php
 namespace Location\Geometry;
-use InvalidArgumentException;
+
 use Location\LatLng;
+use Illuminate\Support\Traits\Macroable;
 use Stringable;
 
 /**
@@ -10,6 +11,7 @@ use Stringable;
  */
 class Point  implements Stringable
 {
+    use Macroable;
     /**
      * @var false|float
      */
@@ -30,18 +32,7 @@ class Point  implements Stringable
         $this->x = $round ? round($x) : $x;
         $this->y = $round ? round($y) : $y;
     }
-    /**
-     * @param string $name
-     * @param array $args
-     * @return mixed
-     */
-    public function __call(string $name, array $args)
-    {
-        if(method_exists($this,$name)){
-            return $this->$name(...$args);
-        }
-        throw new InvalidArgumentException("Method does not exist");
-    }
+  
     /**
      * @return float
      */

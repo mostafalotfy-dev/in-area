@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists("formatNumber")) {
     function formatNumber(float|int $num, int|null $digits = null)
     {

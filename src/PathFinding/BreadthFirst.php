@@ -8,7 +8,7 @@ use Location\Traits\Encapsulate;
  * Class Graph
  * @package Location\PathFinding
  */
-class Graph
+class BreadthFirst
 {
     use Encapsulate;
     /**
@@ -67,17 +67,7 @@ class Graph
 
         return $order->toArray();
     }
-    /**
-     * @param mixed $start
-     * @return void
-     */
-    private function dijkstra($start)
-    {
-        $min = (float) INF;
-        $min_index = 0;
-        
 
 
-    }
 
 }

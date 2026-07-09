@@ -5,6 +5,7 @@ namespace Location\Geometry;
 
 use InvalidArgumentException;
 use Iterator;
+use Illuminate\Support\Traits\Macroable;
 
 
 /**
@@ -13,6 +14,7 @@ use Iterator;
  */
 class Bounds implements Iterator, \ArrayAccess, \Countable
 {
+    use Macroable;
     /**
      * @var Point[]
      */
@@ -62,18 +64,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         }
 
     }
-    /**
-     * @param string $name
-     * @param array $args
-     * @return mixed
-     */
-    public function __call(string $name, array $args)
-    {
-        if (property_exists($this, $name)) {
-            return $this->$name(...$args);
-        }
-
-    }
+ 
     /**
      * add new Point
      * @param Point $point
@@ -143,7 +134,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         return $this->max;
     }
     /**
-     * 
+     *
      * @return Point
      */
     public function getSize()
@@ -176,7 +167,7 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
         $max = null;
         if ($point instanceof Point) {
             $min = $max = $point;
-        } else if ($point instanceof Bounds) {
+        } elseif ($point instanceof Bounds) {
             $min = $point->getMin();
             $max = $point->getMax();
         }
@@ -206,18 +197,18 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
      * Check if valid point
      * @return bool
      */
-    private function isValid()
+    private function isValid():bool
     {
-        return !!($this->min && $this->max);
+        return (bool)($this->min && $this->max);
     }
 
     /**
-     * @return Bounds 
-     * @throws InvalidArgumentException 
+     * @return Bounds
+     * @throws InvalidArgumentException
      */
     public static function fromArray(array $points)
     {
-        if (\count($points) === 0) {
+        if (empty($points)) {
             throw new InvalidArgumentException("Array is Empty");
         }
         $_points = [];
@@ -310,7 +301,5 @@ class Bounds implements Iterator, \ArrayAccess, \Countable
     {
         return \count($this->points) === 0;
     }
-    
-
 
 }

@@ -2,7 +2,7 @@
 use Location\Geometry\Bounds;
 use Location\Geometry\Point;
 
-require(__DIR__."/../vendor/autoload.php");
+require_once __DIR__."/../vendor/autoload.php";
 
 if (isset($_POST["lat"]) && isset($_POST["long"]) && isset($_POST["points"])){
 
@@ -24,7 +24,7 @@ if (isset($_POST["lat"]) && isset($_POST["long"]) && isset($_POST["points"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="./leaflet.css">
@@ -47,7 +47,7 @@ if (isset($_POST["lat"]) && isset($_POST["long"]) && isset($_POST["points"])){
         crossorigin="anonymous"></script>
          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+     crossorigin="anonymous"></script>
 <script src="index.js" ></script>
 
 </body>
