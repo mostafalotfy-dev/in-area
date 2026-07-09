@@ -5,7 +5,7 @@ namespace Location\Geometry;
 
 use InvalidArgumentException;
 use Iterator;
-use Illuminate\Support\Traits\Macroable;
+use Location\Traits\Encapsulate;
 
 
 /**
@@ -14,7 +14,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Bounds implements Iterator, \ArrayAccess, \Countable
 {
-    use Macroable;
+    use Encapsulate;
     /**
      * @var Point[]
      */
