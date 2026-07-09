@@ -8,7 +8,7 @@ use Location\Geometry\Point;
  * Class Transformation
  * @package Location\Geometry
  */
-class Transformation { 
+class Transformation {
     /**
      * @var float
      */
@@ -46,7 +46,7 @@ class Transformation {
             $this->vectorA = $a;
             $this->vectorB = $b;
             $this->vectorC = $c;
-            $this->vectorD = $d; 
+            $this->vectorD = $d;
         }
         
     }

@@ -2,7 +2,7 @@
 namespace Location\Geometry;
 
 use Location\LatLng;
-use Illuminate\Support\Traits\Macroable;
+use Location\Traits\Encapsulate;
 use Stringable;
 
 /**
@@ -11,7 +11,7 @@ use Stringable;
  */
 class Point  implements Stringable
 {
-    use Macroable;
+    use Encapsulate;
     /**
      * @var false|float
      */

@@ -4,11 +4,11 @@
 namespace Location\PathFinding;
 use Illuminate\Support\Traits\Macroable;
 use Location\Geometry\Point;
-
+use Location\Traits\Encapsulate;
 
 class Dijkstra
 {
-    use Macroable;
+    use Encapsulate;
     private array $node = [];
     private array $edge = [];
 
